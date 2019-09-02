@@ -1,0 +1,489 @@
+for img in *.png; do mv $img ${img//14032x9920/9920x7016}; done
+
+for img in *.png; do convert $img -resize 7016x4960  ../A2/${img//14032x9920/7016x4960}; done
+
+for img in *.png; do convert $img -resize 9920x7016  ../A1/${img//14032x9920/9920x7016}; done
+
+for img in *.png; do convert -monitor -verbose $img -resize 9920x7016  ../A1/${img//14032x9920/9920x7016}; done
+
+
+=============================================================
+The following works: need a space between the . and ending \;
+
+find TS_2018-09-??/ -name *.png -exec mv '{}' . \;
+=============================================================
+
+do 
+	printf -v CF "%02d" $COUNTER 
+	mv $file img${CF}.png
+	let COUNTER=COUNTER+1
+done
+
+
+sqrt(2):  echo $(echo "scale=64;c(a(1))*2" | bc -l)
+
+for img in *.png; do convert -monitor -verbose $img -resize 764x540  ./ts-764x540/${img//1528x1080/764x540}; done
+
+====================================================================
+For Calendar 2019
+====================================================================
+
+Convert 1920x1080 png, adding borders all around,  then top and bottom, then more border on top, then resize to A4 at 300dpi (3508x2480px):
+
+Single image:
+
+$ convert <INPUT FILE> -bordercolor black -border 50x50 <OUTPUT FILE> // 50px all around
+
+$ convert <INPUT FILE> -bordercolor black -border 0x100 <OUTPUT FILE> // 100px top and bottom
+
+$ convert <INPUT FILE> -background black -splice 0x48 <OUTPUT FILE> // 48px just on top
+
+$ convert <INPUT FILE> -resize 3508x2480/! <OUTPUT FILE> // expand to A4 at 300dpi
+
+====================================================================
+====================================================================
+
+#  Correct glob use:
+#  Always use for-loop, prefix glob, check if exists file.
+for file in ./* ; do         # Use ./* ... NEVER bare *
+  if [ -e "$file" ] ; then   # Check whether file exists.
+     COMMAND ... "$file" ...
+  fi
+done
+
+[This example taken from David Wheeler's site, with permission. [http://www.dwheeler.com/essays/filenames-in-shell.html]]
+
+====================================================================
+
+LOOPS:
+
+for img in *.png; do convert -monitor $img -resize 1200x848 ../res1200x848/${img//1528x1080/1200x848}; done
+
+for vid in *.avi; do ffmpeg -i $vid ${vid//avi/webm}; done
+
+for img in *.png; do glslViewer -w 1080 -h 1080 ../j-shaders-textures/test00.frag $img
+
+for img in *.png; do onvert $img -transparent black ${img//.png/-TX.png}; done
+
+for img in *.png; do convert $img -transparent black ${img//.png/-TX.png}; done
+
+*** Multiple images (example, renaming with identifying suffix and saving in a sibling folder):
+
+for img in *.png; do convert -monitor -verbose $img -background black -splice 0x48 ../holes/${img//.png/-holes.png}; done
+
+====================================================================
+
+CROP IMAGE, CENTRED:
+
+convert tx1024-32506.png  -gravity Center  -crop 1024x1024+0+0 +repage tx1024-32506TX.png
+
+15:53: icons $ identify favicon.ico 
+favicon.ico ICO 67x64 67x64+0+0 24-bit sRGB 13.9KB 0.000u 0:00.000
+(ft) ======================================================================================================================
+15:53: icons $ convert  favicon.ico -gravity East   -chop 3x0   favicon64x64.ico
+(ft) ======================================================================================================================
+15:55: icons $ identify favicon64x64.ico 
+favicon64x64.ico ICO 64x64 64x64+0+0 32-bit sRGB 17KB 0.000u 0:00.000
+
+====================================================================
+
+FIND EXAMPLES:
+
+find ./TS_2018*  -size +80M -exec cp {} /media/john/SB@/tsbak-2018-01-23/  \;
+find . -type f -name '*24000x13500*.txt' -exec cp {} ../dest-dir/ \;
+find . -type f -name '*.avi' -exec cp {} ../dest-dir/ \;
+
+=====================================================================
+
+RENAME WITH REGULAR EXPRESSIONS USING CAPTURE GROUPS:
+
+To rename files like xtsM3f118C255-1080x1080x0.0y0.0_83379.png to img83379.png use:
+
+rename -n 's/.+_([0-9]+)\.png/img$1\.png/' *.png
+
+rename -n 's/([0-9]{3})\.png/jmg$1\.png/' *.png
+
+(Remove the -n flag when it's working)
+
+======================================================================
+
+Make a window go fullscreen:
+
+wmctrl -r glslViewer -b add,fullscreen
+
+======================================================================
+
+ENCODE AN IMAGE SEQUENCE TO AN MP4 VIDEO:
+
+ffmpeg -framerate 30 -i img%05d.png -vf format=yuv420p dance01FF.mp4
+
+ffmpeg -framerate 30 -i img%05d.png -vf format=yuv420p svidAA-ffmpeg.mp4
+
+
+
+======================================================================
+
+
+UNCLUTTER (Hide mouse pointer):
+
+unclutter -idle .000001 -jitter 2000
+
+
+
+
+
+======================================================================
+
+LINKS:
+
+http://www.imagemagick.org/Usage/video/
+
+http://hamelot.io/visualization/using-ffmpeg-to-convert-a-set-of-images-into-a-video/
+
+https://en.wikibooks.org/wiki/FFMPEG_An_Intermediate_Guide/image_sequence
+
+OPENGL:
+
+http://www.opengl-tutorial.org/beginners-tutorials/tutorial-5-a-textured-cube/
+
+https://www.tomdalling.com/blog/modern-opengl/02-textures/
+
+https://learnopengl.com/Getting-started/Textures
+
+http://www.lighthouse3d.com/tutorials/glsl-tutorial/texturing-with-images/
+
+https://www.opengl.org/sdk/docs/tutorials/ClockworkCoders/texturing.php
+
+https://www.khronos.org/opengl/wiki/Sampler_(GLSL)
+
+
+
+for img in img*.png; do convert $img -transparent black ${img//.png/-TXX.png}; done
+
+====================================================================================
+
+Restart window manager:
+xfce4-panel -r && xfwm4 --replace
+
+Reset and restart panel
+xfconf-query -c xfce4-panel -p / -R -r
+
+Aliases:
+alias fiji='~/fiji/Fiji.app/ImageJ-linux64'
+alias sau='sudo apt update'
+alias fx='cd ~/java/java10/fracgen'
+alias rfx='java -cp /media/john/sys2/imageJ/jars/ImageJ/ij.jar:. -Xmx8g FracGenWX -c8m -RR -! -H -C'
+alias m='mkdir'
+alias ffx='java -cp /media/john/sys2/imageJ/jars/ImageJ/ij.jar:. -Xmx8g FracGenWX -c6m -! -H -C'
+alias tsdemo='ffx -f277 -g80'
+alias cfx='javac -cp /media/john/sys2/imageJ/jars/ImageJ/ij.jar:. FracGenWX.java'
+alias panel='xfce4-panel -p'
+alias pg='cd /media/john/sys2/web18/playground'
+alias disp=xfce4-display-settings
+alias b=". ~/.bash_aliases"
+alias ..="cd .."
+alias ...="cd ../.."
+alias p="ping -c 6 8.8.8.8"
+alias sau='sudo apt update'
+alias x='xdg-open'
+alias gl='git log --oneline'
+alias g=glslViewer
+alias gf="wmctrl -r glslViewer -b add,fullscreen"
+alias sib=".. && cd"
+alias upg='sudo apt upgrade'
+alias fupg='sudo apt full-upgrade'
+alias sai='sudo apt install'
+alias xr='xfce4-panel -r && xfwm4 --replace'
+
+
+====================================================================================
+Thunar:
+Edit settings in /usr/share/themes/Greybird/gtk-2.0/gtkrc
+then log out/in.
+
+Asus Graphics: GTX 1050 mobile requires 'nouveau.modeset=0' in grub 
+boot options for install, then upgrade to nvidia driver.
+
+Sublime text install:
+--------------------
+wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
+
+echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
+
+sudo apt update
+
+sudo apt-get install sublime-text
+
+Remove lines matching a specific pattern from a file, e.g:.
+
+$ sed -i '/pkg-r/d' requirements.txt
+
+# Example: delete the 4th line in a file:
+
+$ sed '4d' input.txt > output.txt
+
+# Example: replace every occurrence of 'hello' with 'world' on lines 10-20
+
+$ sed '10,20s/hello/world/' input.txt > output.txt
+
+$ sed 's/ecsu/molerat/g'  molerat.py
+==================================================================================
+
+Restart Window Manager:
+
+$ sudo service lightdm restart
+
+for img in TS_*/ts14032x9920/xts*.png; do convert -monitor -verbose $img -resize 6.25%  ./zarg/${img//14032x9920/877x620}; done
+
+
+
+
+
+
+
+
+for img in TS_*/ts14032x9920/xts*.png; let f = "${img##*/}"; do convert $img -resize 6.25%  ./zarg/${f//14032x9920/877x620}; done
+
+
+
+lll() { ls --color=auto -lha "$1" | awk '{print $5 "B", $9}' }
+
+
+for img in xts*.png; do convert -monitor -verbose $img -resize 6.25%  ../zarg877/${img//14032x9920/877x620}; done
+
+for img in xts*.png; do convert -monitor -verbose $img -resize 50%  ../zarg438/${img//877x620/438x310}; done
+
+===================================================
+
+to add missing keys to apt package system:
+
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys <key, not in quotes>
+
+e.g. sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 7EA0A9C3F273FCD8
+
+===================================================
+
+SERVICES
+========
+
+service --status-all
+
+systemctl -l --type service --all
+
+sudo systemctl status docker
+
+sudo systemctl -l --type service --all
+
+
+gmail teraspora.fractals TSGMpw512.?
+
+ip a | grep inet
+
+sudo systemctl status ssh
+sudo systemctl disable ssh
+sudo systemctl enable ssh
+
+rsync -av fred/ fred2/
+rsync john@192.168.8.104:/media/john/omicron/4.txt 5.txt
+rsync 4.txt john@192.168.8.104:/media/john/omicron
+
+
+# -r => recursive copy
+scp -r ~/amazing john@221.48.119.105:~/ # random IP! => home folder
+(think need SSH key-based auth set up)
+
+Git: Revert to precious commit without losing history:
+
+git reset --hard a698706
+git reset --soft HEAD@{1}
+git commit -m "Reverting project state to commit a698706"
+
+==========================================================================================
+
+Keyboard mapping:
+~~~~~~~~ ~~~~~~~
+
+xev -event keyboard
+
+lets you check keyboard events and get keycodes, names
+of keys etc. to use in the below `xmodmap` commands.
+----------------------------------------------------
+
+xmodmap -e "keycode 90 = ISO_Level3_Shift"
+
+remaps keycode 90 (generated by pressing the "Insert"/"0" key on the numeric keypad)
+to "ISO_Level3_Shift" (which is the name for "Alt-Gr").
+
+----------------------------------------------------
+
+xmodmap -e "keycode 77 = Delete"
+
+remaps keycode 77 (generated by pressing the "num lk" key on the numeric keypad)
+to "Delete".
+
+----------------------------------------------------
+
+setxkbmap
+
+# resets these remappings.
+
+Info: 
+
+https://medium.com/@damko/a-simple-humble-but-comprehensive-guide-to-xkb-for-linux-6f1ad5e13450
+
+https://askubuntu.com/questions/29603/how-do-i-clear-xmodmap-settings/1155211#1155211
+
+----------------------------------------------------
+
+So, did
+
+xmodmap -e "keycode 77 = Delete"
+xmodmap -e "keycode 90 = Menu"
+xmodmap -e "keycode 135 = Alt_R"
+
+----------------------------------------------------
+
+
+for i in {0..9} do mkdir page$i done
+
+for i in {0..9}; do echo -e "<\!DOCTYPE html>\n<html lang="en">\n<head>\n\t<meta charset="UTF-8">\n\t<title>Git test Page $i</title>\n</head>\n<body>\n</body>\n</html>" > page0.html> page$i.html; done
+
+
+
+
+
+
+Pomodoro technique: 25 mins work/study, 5 mins break...
+
+sleep 25m && vlc "~/music/some_music_track.flac" &> /dev/null && disown -a &
+
+# Disk operations:
+= === ===== ==========
+
+# wipe a drive
+sudo dd if=/dev/zero of=/dev/sdx bs=4m status=progress
+
+# Check what's mounted
+df -h
+
+# Unmount a partition
+sudo umount /dev/sdx1
+
+# Create partition
+fdisk /dev/sdx
+# - p print partition table
+# - n create new partition
+# - w write to disk
+
+# Now create a filesystem
+sudo mkfs.ext4 /dev/sdx1
+
+# ...or FAT32 (do we need -I option???????)
+sudo mkfs.fat -F 32 -I /dev/sdx1
+
+# Create a mount point, and mount it
+sudo mkdir /media/foo
+sudo mount /dev/sdx1 /media/foo
+
+# Change the label (for ext<n> filesystems)
+sudo e2label /dev/sdx1 foodisk
+
+# Change the label (for FAT16/FAT32 filesystems)
+sudo dosfslabel /dev/sdx1 foodisk
+
+
+# rtcwake operations:
+# === ===== ==========
+
+# Suspend to RAM, and wake up at specified time
+sudo rtcwake -m mem -t $(date --date='20:55' +%s)
+
+# ===================================================
+
+# Get RTC info:
+sudo hwclock  -rD
+
+# Get ip address of interface:
+ip addr show wlp4s0
+
+# Get status of service (old way):
+sudo service lightdm status
+
+# Get status of service (new way):
+systemctl status lightdm
+
+# Get size of directory on disk
+du -sh ~/tech   # s => summary, h => human-readable
+
+# Get size of all children of directory on disk
+du -sh ~/tech/*
+
+# Get network info:
+sudo netstat -tulpn
+
+# Get info about disks:
+df -h
+mount
+ll /dev/disk/by-uuid
+blkid
+blkid /dev/sdx1
+
+# In /etc/fstab:
+# john 2019 #
+UUID=f58e60a9-7467-4529-a750-a5f59f5bd933 /mnt/zeta       ext4    defaults        0       2
+
+# USB stick operations:
+= === ===== ==========
+
+# wipe a drive
+sudo dd if=/dev/zero of=/dev/sdx bs=4m status=progress
+
+# Check what's mounted
+df -h
+
+# Unmount a partition
+sudo umount /dev/sdx1
+
+# Create partition
+fdisk /dev/sdx
+- p print partition table
+- n create new partition
+- w write to disk
+
+# Now create a filesystem
+sudo mkfs.ext4 /dev/sdx1
+
+# ...or FAT32 (do we need -I option???????)
+sudo mkfs.fat -F 32 -I /dev/sdx1
+
+# Create a mount point, and mount it
+sudo mkdir /media/foo
+sudo mount /dev/sdx1 /media/foo
+
+# Change the label (for ext<n> filesystems)
+sudo e2label /dev/sdx1 foodisk
+
+# Change the label (for FAT16/FAT32 filesystems)
+sudo dosfslabel /dev/sdx1 foodisk
+
+
+# rtcwake operations:
+= === ===== ==========
+
+# Suspend to RAM, and wake up at specified time
+sudo rtcwake -m mem -t $(date --date='20:55' +%s)
+
+# Redo last command as sudo
+sudo !!
+
+# Set
+EDITOR=nano
+then use Ctrl+x+e to invoke nano from the terminal to edit a command;
+then Ctrl+o,Enter,Ctrl+x
+will close nano and paste the edited command back in the terminal and run it.
+
+If running a long `dd` copy, from another terminal run 
+`sudo kill -USR1 $(pgrep -l '^dd$' | sed 's/.\{2\}$//')`
+to get it to log progress to STDERR.
+
+

@@ -1,0 +1,34 @@
+BASH
+====
+
+7. ALT+U – Capitalize all characters in a word after the cursor.
+
+8. ALT+L – Uncaptalize all characters in a word after the cursor.
+
+9. ALT+R – Undo any changes to a command that you have brought from the history if you’ve edited it.
+
+17. CTRL+G – Leave the history searching mode without running the command.
+
+9. CTRL+J – Same as ENTER/RETURN key.
+
+ENTER key is not working? No problem! CTRL+J or CTRL+M can be used as an alternative to ENTER key.
+
+17. CTRL+S – Searches the history forward.
+
+18. CTRL+T – Swaps the last two characters.
+ 
+20. CTRL+V – Makes the next character typed verbatim
+
+21. CTRL+W – Delete the words before the cursor.
+
+Don’t confuse it with CTRL+U. CTRL+W won’t delete everything behind a cursor, but a single word.
+
+22. CTRL+X – Lists the possible filename completions of the current word.
+
+23. CTRL+XX – Move between start of command line and current cursor position (and back again).
+ 
+24. CTRL+Y –  Retrieves last item that you deleted or cut.
+
+1. !! – Repeats the last command.
+
+2. ESC+t – Swaps the last two words.

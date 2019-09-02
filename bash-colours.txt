@@ -1,0 +1,92 @@
+To change your directory colors, open up your ~/.bashrc file with your editor
+
+nano ~/.bashrc
+and make the following entry at the end of the file:
+
+LS_COLORS=$LS_COLORS:'di=0;35:' ; export LS_COLORS
+Some nice color choices (in this case 0;35 it is purple) are:
+
+Blue = 34
+Green = 32
+Light Green = 1;32
+Cyan = 36
+Red = 31
+Purple = 35
+Brown = 33
+Yellow = 1;33
+white = 1;37
+Light Grey = 0;37
+Black = 30
+Dark Grey= 1;30
+The first number is the style (1=bold), followed by a semicolon, and then the actual number of the color, possible styles are:
+
+0 = default colour
+1   = bold
+4   = underlined
+5   = flashing text
+7   = reverse field
+40  = black background
+41  = red background
+42  = green background
+43  = orange background
+44  = blue background
+45  = purple background
+46  = cyan background
+47  = grey background
+100 = dark grey background
+101 = light red background
+102 = light green background
+103 = yellow background
+104 = light blue background
+105 = light purple background
+106 = turquoise background
+All possible colors:
+
+31  = red
+32  = green
+33  = orange
+34  = blue
+35  = purple
+36  = cyan
+37  = grey
+90  = dark grey
+91  = light red
+92  = light green
+93  = yellow
+94  = light blue
+95  = light purple
+96  = turquoise
+These can even be combined, so that a parameter like:
+
+di=1;4;31;42
+in your LS_COLORS variable would make directories appear in bold underlined red text with a green background!
+
+You can also change other kinds of files when using the ls command by defining each kind with:
+
+di = directory
+fi = file
+ln = symbolic link
+pi = fifo file
+so = socket file
+bd = block (buffered) special file
+cd = character (unbuffered) special file
+or = symbolic link pointing to a non-existent file (orphan)
+mi = non-existent file pointed to by a symbolic link (visible when you type ls -l)
+ex = file which is executable (ie. has 'x' set in permissions).
+*.rpm = files with the ending .rpm
+After you alter your .bashrc file, to put the changes in effect you will have to restart your shell.
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+10.4 dircolors: Color setup for ls
+
+dircolors outputs a sequence of shell commands to set up the terminal for color output from ls (and dir, etc.). Typical usage:
+
+eval "$(dircolors [option]… [file])"
+If file is specified, dircolors reads it to determine which colors to use for which file types and extensions. Otherwise, a precompiled database is used. For details on the format of these files, run ‘dircolors --print-database’.
+
+To make dircolors read a ~/.dircolors file if it exists, you can put the following lines in your ~/.bashrc (or adapt them to your favorite shell):
+
+d=.dircolors
+test -r $d && eval "$(dircolors $d)"
+The output is a shell command to set the LS_COLORS environment variable. You can specify the shell syntax to use on the command line, or dircolors will guess it from the value of the SHELL environment variable.
