@@ -1,6 +1,6 @@
 #!/bin/bash
 # www.sh
-# Make a directory inside the current directory, copy frontend tamplate file structure to it, then change to it
+# Make a directory inside the current directory, copy frontend template file structure to it, then change to it
 mkdir $1
 cd $1
 cp -r /media/john/sys2/web18/playground/templates/web_fe/* .
