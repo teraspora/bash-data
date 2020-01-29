@@ -103,6 +103,14 @@ rename -n 's/([0-9]{3})\.png/jmg$1\.png/' *.png
 
 (Remove the -n flag when it's working)
 
+Using a variable in rename:
+Rename is a PERL script so need to use double quotes around the command so Bash expands it before passing to Perl.   Single quotes won't do.
+
+Rename all files x*.png to side_img<nn>.png:
+for img in *.png; do rename "s/x.*\.png$/side_img$i\.png/" $img;i=$(($i+1));done
+
+Without for loop, add a leading zero to the number:
+rename -n 's/^side_img(.)\.png/side_img0$1\.png/' *.png
 ======================================================================
 
 Make a window go fullscreen:
@@ -549,3 +557,33 @@ $ kill -9 6067
 # Redirection writing to a file in root dir:
 
 sudo sh -c 'echo "fs.inotify.max_user_watches=524288" >> /etc/sysctl.conf'
+
+# Use `readlink` to get the absolute path of a file or folder
+
+```
+14:25: apache2 $ readlink -f sites-available/default-ssl.conf 
+/etc/apache2/sites-available/default-ssl.conf
+```
+# Grep notes:
+
+grep -rnw '/path/to/somewhere/' -e 'pattern'
+
+    -r or -R is recursive,
+    -n is line number, and
+    -w stands for match the whole word.
+    -l (lower-case L) can be added to just give the file name of matching files.
+
+Along with these, --exclude, --include, --exclude-dir flags could be used for efficient searching:
+
+    This will only search through those files which have .c or .h extensions:
+
+    grep --include=\*.{c,h} -rnw '/path/to/somewhere/' -e "pattern"
+
+    This will exclude searching all the files ending with .o extension:
+
+    grep --exclude=*.o -rnw '/path/to/somewhere/' -e "pattern"
+
+    For directories it's possible to exclude a particular directory(ies) through --exclude-dir parameter. For example, this will exclude the dirs dir1/, dir2/ and all of them matching *.dst/:
+
+    grep --exclude-dir={dir1,dir2,*.dst} -rnw '/path/to/somewhere/' -e "pattern"
+
