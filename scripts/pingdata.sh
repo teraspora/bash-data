@@ -1,9 +1,11 @@
 #!/bin/bash
 
+# pingdata.sh
+
 usage() {
     echo "Script to gather connection stats by pinging a server regularly and saving the data to a file."
     echo "Usage: $0 [-p|--ip <IP>] [-i|--interval <seconds>] [-f|--output <filename>]"
-    ecdho "Example: ./goex.sh --ip f.rootserver.net -i 1 -o testrootf.log"
+    echo "Example: ./pingdata.sh --ip f.rootserver.net -i 5 -o testrootf.log"
     exit 1
 }
 
@@ -13,6 +15,7 @@ long_opts="ip:,interval:,output:"
 parsed_opts=$(getopt -o "$short_opts" --long "$long_opts" -n "$(basename "$0")" -- "$@")
 
 if [ $? -ne 0 ]; then
+    usage
     echo "Error parsing options. Exiting."
     exit 1
 fi
